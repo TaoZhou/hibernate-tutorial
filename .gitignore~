@@ -1,0 +1,15 @@
+.classpath
+.project
+.settings
+.metadata
+.springBeans
+.checkstyle
+.orig
+.idea
+*.iml
+src/test/resources/*.war
+*.bak
+target
+bin
+Servers
+
