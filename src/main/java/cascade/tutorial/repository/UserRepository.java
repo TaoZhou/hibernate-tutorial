@@ -1,8 +1,10 @@
 package cascade.tutorial.repository;
 
+import cascade.tutorial.domain.User;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-
-public interface UserRepository <User> extends CrudRepository<User, Long> {
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
 
 }

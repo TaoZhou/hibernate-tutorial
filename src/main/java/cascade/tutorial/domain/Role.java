@@ -12,13 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-@Entity(name = "userrole")
+@Entity(name = "role")
 public class Role implements Serializable {
 
   private static final long serialVersionUID = 3875690504145526815L;
 
   @Id
-  @Column(name = "roleid")
+  @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
@@ -26,7 +26,7 @@ public class Role implements Serializable {
   private String name;
 
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "mergeduserrole", joinColumns = {@JoinColumn(name = "roleid")},
+  @JoinTable(name = "userrole", joinColumns = {@JoinColumn(name = "roleid")},
       inverseJoinColumns = {@JoinColumn(name = "userid")})
   private Set<User> users;
 

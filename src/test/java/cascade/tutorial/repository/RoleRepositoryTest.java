@@ -1,9 +1,9 @@
-package no.integrasco.intellego.model.repository;
+package cascade.tutorial.repository;
 
-import static org.springframework.test.util.AssertionErrors.assertEquals;
+
+import static org.junit.Assert.assertEquals;
 
 import cascade.tutorial.domain.Role;
-import cascade.tutorial.repository.RoleRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@Transactional("roleTransactionManager")
+@Transactional("tutorialTransactionManager")
 @TransactionConfiguration(defaultRollback = true)
 public class RoleRepositoryTest {
 
@@ -22,11 +22,14 @@ public class RoleRepositoryTest {
   private RoleRepository roleRepository;
 
   @Test
-  public void verifyModelContainsExpectedVersions() {
+  public void findOne_withGivenRoleId_returnRoleAsExpected() {
 
+    String expectedRoleName = "user";
     Long roleId = 1l;
     Role role = roleRepository.findOne(roleId);
-    assertEquals();
+    assertEquals(expectedRoleName, role.getName());
   }
+
+
 
 }

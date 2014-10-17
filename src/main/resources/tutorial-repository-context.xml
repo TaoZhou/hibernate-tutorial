@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                        http://www.springframework.org/schema/data/jpa
+                        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<jpa:repositories base-package="cascade.tutorial.repository"
+		entity-manager-factory-ref="tutorialEntityManagerFactory" transaction-manager-ref="tutorialTransactionManager" />
+		
+	<bean id="tutorialDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass">
+			<value>${tutorial.driver}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${tutorial.url}</value>
+		</property>
+		<property name="user">
+			<value>${tutorial.user}</value>
+		</property>
+		<property name="password">
+			<value>${tutorial.pass}</value>
+		</property>
+	</bean>
+	
+	<bean id="tutorialEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="tutorialDataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="false" />
+			</bean>
+		</property>
+		<property name="jpaProperties" ref="tutorialHibernateProperties" />
+		<property name="packagesToScan">
+			<list>
+				<value>cascade.tutorial.domain</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="tutorialTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="tutorialEntityManagerFactory" />
+	</bean>
+	<bean id="tutorialHibernateProperties" class="java.util.Properties"/>
+
+	<tx:annotation-driven transaction-manager="tutorialTransactionManager" />
+</beans>
